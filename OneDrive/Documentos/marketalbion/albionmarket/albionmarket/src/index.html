@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Albion Online Data</title>
+</head>
+<body>
+    <header></header>
+
+    <table>
+        <tr>
+            <td >ciudad</td>
+            <td >Item</td>
+            <td >Precio</td>
+        </tr>
+        <tr >
+            <td id="ciu"></td>
+            <td id="item"></td>
+            <td id="price"></td>
+        </tr>
+    </table>
+
+    <main>
+        <select name="tipo" id="select-type">
+            <option value="">Tipo</option>
+            <optgroup label="Accesorios">
+                <option value="">Bolsa</option>
+                <option value="">Capa</option>
+            </optgroup>
+            <optgroup label="Armadura">
+                <option value="">Casco de tela</option>
+                <option value="">Armadura de tela</option>
+                <option value="">Zapatos de tela</option>
+                <option value="">Casco de cuero</option>
+                <option value="">Armadura de cuero</option>
+                <option value="">Zapatos de cuero</option>
+                <option value="">Casco de placas</option>
+                <option value="">Armadura de placas</option>
+                <option value="">Zapatos de placas</option>
+            </optgroup>
+            <optgroup label="Cuerpo a Cuerpo">
+                <option value="">Hacha</option>
+                <option value="">Daga</option>
+                <option value="">Martillo</option>
+                <option value="">Guantes</option>
+                <option value="">Maza</option>
+                <option value="">Vara</option>
+                <option value="">Lanza</option>
+                <option value="">Espada</option>
+            </optgroup>
+            <optgroup label="Magia">
+                <option value="">Bastón arcano</option>
+                <option value="">Bastón de hielo</option>
+                <option value="">Bastón igneo</option>
+                <option value="">Bastón maldito</option>
+                <option value="">Bastón natural</option>
+                <option value="">Bastón sagrado</option>
+            </optgroup>
+            <optgroup label="A distancia">
+                <option value="">Arco</option>
+                <option value="">Ballesta</option>
+            </optgroup>
+            <optgroup label="Secundaria">
+                <option value="">Libro</option>
+                <option value="">Cuerno</option>
+                <option value="">Orbe</option>
+                <option value="">Escudo</option>
+                <option value="">Antorcha</option>
+                <option value="">Tótem</option>
+            </optgroup>
+            <optgroup label="Artefacto">
+                <option value="">Armadura</option>
+                <option value="">Cuerpo a cuerpo</option>
+                <option value="">Magia</option>
+                <option value="">A distancia</option>
+                <option value="">Arma secundaria</option>
+                <option value="">Otros</option>
+            </optgroup>
+            <optgroup label="Consumible">
+                <option value="">Cocinado</option>
+                <option value="">Pescado</option>
+                <option value="">Cebo de pesca</option>
+                <option value="">Mapa</option>
+                <option value="">Poción</option>
+                <option value="">Otros</option>
+            </optgroup>                    
+            <optgroup label="Producto">
+                <option value="">Animal</option>
+                <option value="">Cocinado</option>
+                <option value="">Cultivo</option>
+                <option value="">Diarios</option>
+            </optgroup>
+            <optgroup label="Recurso">
+                <option value="">Fibra</option>
+                <option value="">Tela</option>
+                <option value="">Piel</option>
+                <option value="">Cuero</option>
+                <option value="">Metal</option>
+                <option value="">Lingotes</option>
+                <option value="">Madera</option>
+                <option value="">Tablas</option>
+                <option value="">Piedra</option>
+                <option value="">Bloques</option>
+            </optgroup>
+        </select>
+        <select name="nivel" id="">
+            <option value="">Nivel</option>
+            <option value="">Nivel 1</option>
+            <option value="">Nivel 2</option>
+            <option value="">Nivel 3</option>
+            <option value="">Nivel 4</option>
+            <option value="">Nivel 5</option>
+            <option value="">Nivel 6</option>
+            <option value="">Nivel 7</option>   
+            <option value="">Nivel 8</option>
+        </select>
+        <select name="encantamiento" id="">
+            <option value="">Encantamiento</option>
+            <option value="">Encantamiento 0</option>
+            <option value="">Encantamiento 1</option>
+            <option value="">Encantamiento 2</option>
+            <option value="">Encantamiento 3</option>
+        </select>
+        <select name="calidad" id="">
+            <option value="">Calidad</option>
+            <option value="">Normal</option>
+            <option value="" id="calidad2">Bueno</option>
+            <option value="">Notable</option>
+            <option value="">Sobresaliente</option>
+            <option value="">Obra maestra</option>
+        </select>
+    </main>
+    <footer></footer>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.5/js/select2.full.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.5/css/select2.min.css" />
+    
+
+    <script >
+        const datosPreciosViejos = 'C:\Users\agush\OneDrive\Documentos\marketalbion\webpack-starter-master\webpack-starter-master\src\js\guardarPrecios.json';
+        const ciudades = ['Caerleon','Bridgewatch','Lymhurst','FortSterling']
+        const items = ['T4_BAG','T5_BAG','T6_BAG','T3_MOUNT_HORSE','T3_BAG']
+        let ciu,item,price;
+        ciu = document.querySelector('#ciu');
+        item = document.querySelector('#item');
+        price = document.querySelector('#price');
+
+        const datosViejos = async()  => {
+            const datos =  fetch(datosPreciosViejos)
+                                .then(resp => resp.json())
+
+        }
+for (let j = 0; j < items.length; j++) {
+    for (let i = 0; i < ciudades.length; i++) {
+            const traerAlbion = `https://www.albion-online-data.com/api/v2/stats/prices/${items[j]}?locations=${ciudades[i]}&qualities=2` ; 
+
+            const data = async() => {
+            await fetch(traerAlbion)
+            .then(resp => resp.json())
+                .then(resp => {
+                    console.log(resp[0].item_id);
+                    const idItem = `El id del item es : ${resp[0].item_id}`
+                    const idCiudad =`La ciudad es : ${resp[0].city}`      
+                    const idPrecio = `El precio del item es : ${resp[0].sell_price_min}`          
+                    console.log(`El id del item es : ${resp[0].item_id}`)
+                    console.log(`La ciudad es : ${resp[0].city}`)
+                    console.log(`El precio del item es : ${resp[0].sell_price_min}`);
+                    const tr = document.createElement('tr');
+                    const tr2 = document.createElement('tr');
+                    const td1 = document.createElement('td');
+                    td1.innerHTML= `${resp[0].city}`
+                    tr.append(td1);
+                    const td2 = document.createElement('td');
+                    td2.innerHTML = `${resp[0].item_id}`
+                    tr2.append(td2);
+                    ciu.append(tr);
+                    item.append(tr2);
+                    const td3 = document.createElement('td');
+                    const tr3 = document.createElement('tr');
+                    td3.innerHTML = `${resp[0].sell_price_min}`
+                    tr3.append(td3);
+                    price.append(tr3);
+        }); 
+    }
+            data();
+}
+    
+}
+        
+    
+    
+
+    </script>
+
+</body>
+</html>
