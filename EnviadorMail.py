@@ -10,23 +10,43 @@ lista_vuelos = obtener_mensaje()
 origen = obtener_nombres_reales_origen_destino()[0]
 destino = obtener_nombres_reales_origen_destino()[1]
 
+print(lista_vuelos_precios)
+
 html_text = '''
 <div style="background-color:#7bceeb;">
     <table height="100%" width="100%" cellpadding="0" cellspacing="0" border="0">
       <tr>
         <td valign="top" align="left" background="https://fondosmil.com/fondo/31175.jpg">
-  
-        <h1
-        style="background-color:white;
-        opacity:0.5;
-        text-align:center;
-        border:1px solid black;
-        margin-right: 100px;
-        margin-left: 100px;
-        margin-top: 50px;"
-        >
-        Hola! <br>Vuelos más baratos desde ''' + origen + ''' hasta ''' + destino + '''</h1>
-        <p>hola<br>hola<br>hola<br>hola<br>hola<br>hola<br>hola<br>hola<br></p>
+
+        <div 
+          style="
+          height: 30em;
+          width: 86%;
+          background-color: rgba(255,255,255,0.4);
+          border:1px solid black;
+          margin-right: 100px;
+          margin-left: 100px;
+          margin-top: 50px;" 
+        ">
+
+          <h1 style="
+            text-align:center;
+            color:black;
+          ">Hola! <br>Vuelos más baratos desde ''' + origen + ''' hasta ''' + destino + '''</h1>
+
+          <p style="
+            margin-top: 45px;
+            text-align:center;
+            font-family:arial;
+            font-weight: bold;
+            color: black;
+          ">Encontramos los vuelos más baratos correspondientes a tu búsqueda, abajo dejamos una
+          lista mostrando los vuelos más baratos y los meses más baratos.<br>
+          Además, hemos adjuntado archivos Excel con listas completas de precios filtrados tanto
+          por precio como por fecha.
+          </p>
+
+        </div>
   
         </td>
       </tr>
