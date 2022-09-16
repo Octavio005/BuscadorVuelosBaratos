@@ -1,0 +1,15 @@
+{
+  "name": "vuelos-baratos",
+  "version": "1.0.0",
+  "description": "",
+  "main": "VuelosBaratos.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@playwright/test": "^1.24.2"
+  }
+}
