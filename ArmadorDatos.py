@@ -110,6 +110,63 @@ def obtener_lista_ciudades():
         ciudades = ciudades.read().split(',')
         return ciudades
 
+#Crea una lista de listas con los meses y sus precios promedio
+def obtener_lista_meses_mas_baratos():
+
+    lista_meses_precios = []
+    meses = []
+
+    for mes, precio in zip(data.keys(), data.values()):
+        if len(mes.split(' ')) == 7:
+            mes = mes.split(' ')[1]
+            precio = float(precio.split(' ')[1].replace(',', ''))
+
+            lista_meses_precios.append({mes : precio})
+
+            if [mes] not in meses:
+                meses.append([mes])
+
+    lista = []
+    for i in meses:
+        lista = []
+        lista = list(d.get(i[0], 0) for d in lista_meses_precios)
+
+        while 0 in lista:
+            lista.remove(0)
+                
+        promedio = int(sum(lista)/len(lista))
+        i[0] = mes_corto_a_largo(i[0])
+        i.append(promedio)
+    
+    meses.sort(key=lambda meses: meses[1])
+    
+    return meses
+
+
+def obtener_fecha_mas_barata_por_mes():
+    precio_mas_barato_mes = []
+    mes_actual = ''
+    data.popitem()
+
+    for i,j in zip(data.keys(), data.values()):
+        i = i.split(' ')[1] + ' ' + i.split(' ')[2]
+
+        mes_actual = i.split(' ')[0]
+
+        j = int(j.split(' ')[1].replace(',', ''))
+        if len(precio_mas_barato_mes) == 0:
+            precio_mas_barato_mes.append([i,j])
+        else:
+            size = len(precio_mas_barato_mes)-1
+            if j < precio_mas_barato_mes[size][1] and precio_mas_barato_mes[size][0].split(' ')[0] == mes_actual:
+                precio_mas_barato_mes.pop()
+                precio_mas_barato_mes.append([i,j])
+            elif j < precio_mas_barato_mes[size][1] or precio_mas_barato_mes[size][0].split(' ')[0] != mes_actual:
+                precio_mas_barato_mes.append([i,j])
+    
+    return precio_mas_barato_mes
+
+
 #Los nombres del origen y destino no estan separados,
 #compara los nombres con una lista de ciudades y los separa
 def obtener_nombres_reales_origen_destino():
@@ -131,4 +188,22 @@ def obtener_nombres_reales_origen_destino():
     return [origen_real, destino_real]
 
 
+#Pasa mes abreviado a mes entero
+def mes_corto_a_largo(mes_corto):
+    return {
+            'Jan': 'Enero',
+            'Feb': 'Febrero',
+            'Mar': 'Marzo',
+            'Apr': 'Abril',
+            'May': 'Mayo',
+            'Jun': 'Junio',
+            'Jul': 'Julio',
+            'Aug': 'Agosto',
+            'Sep': 'Septiembre', 
+            'Oct': 'Octubre',
+            'Nov': 'November',
+            'Dec': 'Diciembre'
+    }[mes_corto]
+
+obtener_fecha_mas_barata_por_mes()
 crear_txt_listas_vuelos()
