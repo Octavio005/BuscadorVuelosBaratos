@@ -2,7 +2,10 @@ import smtplib as smtp
 from email.mime.multipart import MIMEMultipart
 from email.mime.application import MIMEApplication
 from email.mime.text import MIMEText
-from ArmadorDatos import obtener_mensaje, obtener_mensaje_precios, obtener_nombres_reales_origen_destino, obtener_lista_meses_mas_baratos, obtener_lista_precios
+import os
+from dotenv import load_dotenv
+from ArmadorDatos import obtener_mensaje, obtener_mensaje_precios, obtener_nombres_reales_origen_destino, obtener_lista_meses_mas_baratos, obtener_lista_precios, \
+crear_excel_por_fecha, crear_excel_por_precio
 
 
 lista_vuelos_precios = obtener_mensaje_precios()
@@ -151,15 +154,15 @@ a[x-apple-data-detectors] {
                    <table cellpadding="0" cellspacing="0" width="100%" role="presentation" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px"> 
                      <tr> 
                       <td align="left" style="padding:0;Margin:0"><h2 style="Margin:0;line-height:30px;mso-line-height-rule:exactly;font-family:arial, 'helvetica neue', helvetica, sans-serif;font-size:16px;font-style:normal;font-weight:bold;color:#455a64;text-align:center">Vuelos más baratos:</h2><p style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:arial, 'helvetica neue', helvetica, sans-serif;line-height:21px;color:#455A64;font-size:14px;text-align:center"><br></p><p style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:arial, 'helvetica neue', helvetica, sans-serif;line-height:21px;color:#455A64;font-size:14px;text-align:center">''' + \
-                        '''(''' + str(lista_precios_baratos[0][0] + '''/''' +lista_precios_baratos[0][1] + '''/''' + lista_precios_baratos[0][2] + ''') al (''' + lista_precios_baratos[0][3] + '''/''' +lista_precios_baratos[0][4] + '''/''' +lista_precios_baratos[0][5]) +''') - ARS ''' + str(lista_precios_baratos[0][6]) \
-                        + ''' <br>(''' + str(lista_precios_baratos[1][0] + '''/''' +lista_precios_baratos[1][1] + '''/''' + lista_precios_baratos[1][2] + ''') al (''' + lista_precios_baratos[1][3] + '''/''' +lista_precios_baratos[1][4] + '''/''' +lista_precios_baratos[1][5]) +''') - ARS ''' + str(lista_precios_baratos[1][6]) \
-                        + ''' <br>(''' + str(lista_precios_baratos[2][0] + '''/''' +lista_precios_baratos[2][1] + '''/''' + lista_precios_baratos[2][2] + ''') al (''' + lista_precios_baratos[2][3] + '''/''' +lista_precios_baratos[2][4] + '''/''' +lista_precios_baratos[2][5]) +''') - ARS ''' + str(lista_precios_baratos[2][6]) \
-                        + ''' <br>(''' + str(lista_precios_baratos[3][0] + '''/''' +lista_precios_baratos[3][1] + '''/''' + lista_precios_baratos[3][2] + ''') al (''' + lista_precios_baratos[3][3] + '''/''' +lista_precios_baratos[3][4] + '''/''' +lista_precios_baratos[3][5]) +''') - ARS ''' + str(lista_precios_baratos[3][6]) \
-                        + ''' <br>(''' + str(lista_precios_baratos[4][0] + '''/''' +lista_precios_baratos[4][1] + '''/''' + lista_precios_baratos[4][2] + ''') al (''' + lista_precios_baratos[4][3] + '''/''' +lista_precios_baratos[4][4] + '''/''' +lista_precios_baratos[4][5]) +''') - ARS ''' + str(lista_precios_baratos[4][6]) \
-                        + ''' <br>(''' + str(lista_precios_baratos[5][0] + '''/''' +lista_precios_baratos[5][1] + '''/''' + lista_precios_baratos[5][2] + ''') al (''' + lista_precios_baratos[5][3] + '''/''' +lista_precios_baratos[5][4] + '''/''' +lista_precios_baratos[5][5]) +''') - ARS ''' + str(lista_precios_baratos[5][6]) \
-                        + ''' <br>(''' + str(lista_precios_baratos[6][0] + '''/''' +lista_precios_baratos[6][1] + '''/''' + lista_precios_baratos[6][2] + ''') al (''' + lista_precios_baratos[6][3] + '''/''' +lista_precios_baratos[6][4] + '''/''' +lista_precios_baratos[6][5]) +''') - ARS ''' + str(lista_precios_baratos[6][6]) \
-                        + ''' <br>(''' + str(lista_precios_baratos[7][0] + '''/''' +lista_precios_baratos[7][1] + '''/''' + lista_precios_baratos[7][2] + ''') al (''' + lista_precios_baratos[7][3] + '''/''' +lista_precios_baratos[7][4] + '''/''' +lista_precios_baratos[7][5]) +''') - ARS ''' + str(lista_precios_baratos[7][6]) \
-                        + ''' <br>(''' + str(lista_precios_baratos[8][0] + '''/''' +lista_precios_baratos[8][1] + '''/''' + lista_precios_baratos[8][2] + ''') al (''' + lista_precios_baratos[8][3] + '''/''' +lista_precios_baratos[8][4] + '''/''' +lista_precios_baratos[8][5]) +''') - ARS ''' + str(lista_precios_baratos[8][6]) + '''<br><br>\
+                        '''(''' + str(lista_precios_baratos[0][0] + '''/''' +lista_precios_baratos[0][1] + '''/''' + lista_precios_baratos[0][2] + ''') al (''' + lista_precios_baratos[0][3] + '''/''' +lista_precios_baratos[0][4] + '''/''' +lista_precios_baratos[0][5]) +''') - ''' + str(lista_precios_baratos[0][8]) + ' ' + str(lista_precios_baratos[0][6]) \
+                        + ''' <br>(''' + str(lista_precios_baratos[1][0] + '''/''' +lista_precios_baratos[1][1] + '''/''' + lista_precios_baratos[1][2] + ''') al (''' + lista_precios_baratos[1][3] + '''/''' +lista_precios_baratos[1][4] + '''/''' +lista_precios_baratos[1][5]) +''') - ''' + str(lista_precios_baratos[1][8]) + ' ' + str(lista_precios_baratos[1][6]) \
+                        + ''' <br>(''' + str(lista_precios_baratos[2][0] + '''/''' +lista_precios_baratos[2][1] + '''/''' + lista_precios_baratos[2][2] + ''') al (''' + lista_precios_baratos[2][3] + '''/''' +lista_precios_baratos[2][4] + '''/''' +lista_precios_baratos[2][5]) +''') - ''' + str(lista_precios_baratos[2][8]) + ' ' + str(lista_precios_baratos[2][6]) \
+                        + ''' <br>(''' + str(lista_precios_baratos[3][0] + '''/''' +lista_precios_baratos[3][1] + '''/''' + lista_precios_baratos[3][2] + ''') al (''' + lista_precios_baratos[3][3] + '''/''' +lista_precios_baratos[3][4] + '''/''' +lista_precios_baratos[3][5]) +''') - ''' + str(lista_precios_baratos[3][8]) + ' ' + str(lista_precios_baratos[3][6]) \
+                        + ''' <br>(''' + str(lista_precios_baratos[4][0] + '''/''' +lista_precios_baratos[4][1] + '''/''' + lista_precios_baratos[4][2] + ''') al (''' + lista_precios_baratos[4][3] + '''/''' +lista_precios_baratos[4][4] + '''/''' +lista_precios_baratos[4][5]) +''') - ''' + str(lista_precios_baratos[4][8]) + ' ' + str(lista_precios_baratos[4][6]) \
+                        + ''' <br>(''' + str(lista_precios_baratos[5][0] + '''/''' +lista_precios_baratos[5][1] + '''/''' + lista_precios_baratos[5][2] + ''') al (''' + lista_precios_baratos[5][3] + '''/''' +lista_precios_baratos[5][4] + '''/''' +lista_precios_baratos[5][5]) +''') - ''' + str(lista_precios_baratos[5][8]) + ' ' + str(lista_precios_baratos[5][6]) \
+                        + ''' <br>(''' + str(lista_precios_baratos[6][0] + '''/''' +lista_precios_baratos[6][1] + '''/''' + lista_precios_baratos[6][2] + ''') al (''' + lista_precios_baratos[6][3] + '''/''' +lista_precios_baratos[6][4] + '''/''' +lista_precios_baratos[6][5]) +''') - ''' + str(lista_precios_baratos[6][8]) + ' ' + str(lista_precios_baratos[6][6]) \
+                        + ''' <br>(''' + str(lista_precios_baratos[7][0] + '''/''' +lista_precios_baratos[7][1] + '''/''' + lista_precios_baratos[7][2] + ''') al (''' + lista_precios_baratos[7][3] + '''/''' +lista_precios_baratos[7][4] + '''/''' +lista_precios_baratos[7][5]) +''') - ''' + str(lista_precios_baratos[7][8]) + ' ' + str(lista_precios_baratos[7][6]) \
+                        + ''' <br>(''' + str(lista_precios_baratos[8][0] + '''/''' +lista_precios_baratos[8][1] + '''/''' + lista_precios_baratos[8][2] + ''') al (''' + lista_precios_baratos[8][3] + '''/''' +lista_precios_baratos[8][4] + '''/''' +lista_precios_baratos[8][5]) +''') - ''' + str(lista_precios_baratos[8][8]) + ' ' + str(lista_precios_baratos[8][6]) + '''<br><br>\
                      </tr> 
                    </table></td> 
                  </tr> 
@@ -257,9 +260,10 @@ a[x-apple-data-detectors] {
 </html>
 '''
 
-
-attachment_vuelos_fecha = "Vuelos ordenados por fecha.txt"
-attachment_vuelos_precios = "Vuelos ordenados por precio.txt"
+crear_excel_por_fecha()
+crear_excel_por_precio()
+attachment_vuelos_fecha = "Vuelos ordenados por fecha.xlsx"
+attachment_vuelos_precios = "Vuelos ordenados por precio.xlsx"
 
 attachments_lista = [attachment_vuelos_fecha, attachment_vuelos_precios]
 
@@ -272,15 +276,17 @@ msg.attach(MIMEText(html_text, 'html'))  # add message body (text or html)
 
 for i in attachments_lista:  # add files to the message
     file_path = i
-    attachment = MIMEApplication(open(file_path, "rb").read(), _subtype="txt")
+    attachment = MIMEApplication(open(file_path, "rb").read(), _subtype="xlsx")
     attachment.add_header('Content-Disposition','attachment', filename=i)
     msg.attach(attachment)
+  
+load_dotenv()
 
 s = smtp.SMTP('smtp.gmail.com')
 s.connect('smtp.gmail.com', 587)
 s.ehlo()
 s.starttls()
 s.ehlo()
-s.login('baratovuelos365@gmail.com','bzxqzrrurbtcvpav')
+s.login(os.getenv('EMAIL_APP'),os.getenv('CODIGO_APP'))
 s.sendmail(msg['From'], msg['To'], msg.as_string())
 s.close()
