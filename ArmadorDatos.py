@@ -90,6 +90,9 @@ listas = procesar_lista(lista_fechas_procesar, lista_precios_procesar, origen, d
 lista_procesado_precios = listas[0]
 lista_procesado = listas[1]
 
+def obtener_lista_precios():
+    return lista_procesado_precios
+    
 def obtener_mensaje():
     return escribir_mensaje(lista_procesado)
 
