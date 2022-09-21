@@ -1,6 +1,7 @@
 import json, requests
 from time import strptime
 from datetime import date
+import pandas as pd
 
 
 #Obtengo fecha del dia para comparar meses y anios
@@ -99,15 +100,6 @@ def obtener_mensaje():
 def obtener_mensaje_precios():
     return escribir_mensaje(lista_procesado_precios)
 
-def crear_txt_listas_vuelos():
-    with open('Vuelos ordenados por precio.txt', 'w') as f:
-        f.write(escribir_mensaje(lista_procesado_precios))
-    f.close()
-
-    with open('Vuelos ordenados por fecha.txt', 'w') as f:
-        f.write(escribir_mensaje(lista_procesado))
-    f.close()
-
 def obtener_lista_ciudades():
     with open('ciudades.txt', 'r') as ciudades:
         ciudades = ciudades.read().split(',')
@@ -191,6 +183,96 @@ def obtener_nombres_reales_origen_destino():
     return [origen_real, destino_real]
 
 
+def crear_excel_por_precio():
+
+    lista_fechas_ida = []
+    lista_fechas_vuelta = []
+    lista_precios = []
+    lista_urls = []
+    for i in lista_procesado_precios:
+        fecha_ida = '('+i[0]+'/'+i[1]+'/'+i[2]+')'
+        fecha_vuelta = '('+i[3]+'/'+i[4]+'/'+i[5]+')'
+        precio = str(i[6]) + ' ' + i[8]
+        url = i[7]
+
+        lista_fechas_ida.append(fecha_ida)
+        lista_fechas_vuelta.append(fecha_vuelta)
+        lista_precios.append(precio)
+        lista_urls.append(url)
+
+    # dataframe Name and Age columns
+    df = pd.DataFrame({'Fecha ida': lista_fechas_ida,
+                    'Fecha vuelta': lista_fechas_vuelta,
+                    'Precio': lista_precios,
+                    'URL': lista_urls
+                    })
+
+    # Create a Pandas Excel writer using XlsxWriter as the engine.
+    writer = pd.ExcelWriter('Vuelos ordenados por precio.xlsx', engine='xlsxwriter')
+
+    # Convert the dataframe to an XlsxWriter Excel object.
+    df.to_excel(writer, sheet_name='Sheet1', index=False)
+
+    # Get the xlsxwriter workbook and worksheet objects.
+    workbook  = writer.book
+    worksheet = writer.sheets['Sheet1']
+
+    # Add some cell formats.
+    format1 = workbook.add_format({'num_format': '#,##0.00'})
+
+    # Set the column width and format.
+    worksheet.set_column(0, 2, 15, format1)
+    worksheet.set_column(3, 3, 120, format1)
+
+    # Close the Pandas Excel writer and output the Excel file.
+    writer.save()
+
+
+
+def crear_excel_por_fecha():
+
+    lista_fechas_ida = []
+    lista_fechas_vuelta = []
+    lista_precios = []
+    lista_urls = []
+    for i in lista_procesado:
+        fecha_ida = '('+i[0]+'/'+i[1]+'/'+i[2]+')'
+        fecha_vuelta = '('+i[3]+'/'+i[4]+'/'+i[5]+')'
+        precio = str(i[6]) + ' ' + i[8]
+        url = i[7]
+
+        lista_fechas_ida.append(fecha_ida)
+        lista_fechas_vuelta.append(fecha_vuelta)
+        lista_precios.append(precio)
+        lista_urls.append(url)
+
+    # dataframe Name and Age columns
+    df = pd.DataFrame({'Fecha ida': lista_fechas_ida,
+                    'Fecha vuelta': lista_fechas_vuelta,
+                    'Precio': lista_precios,
+                    'URL': lista_urls
+                    })
+
+    # Create a Pandas Excel writer using XlsxWriter as the engine.
+    writer = pd.ExcelWriter('Vuelos ordenados por fecha.xlsx', engine='xlsxwriter')
+
+    # Convert the dataframe to an XlsxWriter Excel object.
+    df.to_excel(writer, sheet_name='Sheet1', index=False)
+
+    # Get the xlsxwriter workbook and worksheet objects.
+    workbook  = writer.book
+    worksheet = writer.sheets['Sheet1']
+
+    # Add some cell formats.
+    format1 = workbook.add_format({'num_format': '#,##0.00'})
+
+    # Set the column width and format.
+    worksheet.set_column(0, 2, 15, format1)
+    worksheet.set_column(3, 3, 120, format1)
+
+    # Close the Pandas Excel writer and output the Excel file.
+    writer.save()
+
 #Pasa mes abreviado a mes entero
 def mes_corto_a_largo(mes_corto):
     return {
@@ -207,6 +289,3 @@ def mes_corto_a_largo(mes_corto):
             'Nov': 'November',
             'Dec': 'Diciembre'
     }[mes_corto]
-
-obtener_fecha_mas_barata_por_mes()
-crear_txt_listas_vuelos()
