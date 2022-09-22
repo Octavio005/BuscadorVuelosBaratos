@@ -268,8 +268,11 @@ attachment_vuelos_precios = "Vuelos ordenados por precio.xlsx"
 attachments_lista = [attachment_vuelos_fecha, attachment_vuelos_precios]
 
 msg = MIMEMultipart()
-msg['To'] = "octi123456@gmail.com"
-msg['From'] = "baratovuelos365@gmail.com"
+
+load_dotenv()
+
+msg['To'] = os.getenv('EMAIL_DESTINO')
+msg['From'] = os.getenv('EMAIL_APP')
 msg['Subject'] = "Vuelos baratos"
 
 msg.attach(MIMEText(html_text, 'html'))  # add message body (text or html)
@@ -280,7 +283,6 @@ for i in attachments_lista:  # add files to the message
     attachment.add_header('Content-Disposition','attachment', filename=i)
     msg.attach(attachment)
   
-load_dotenv()
 
 s = smtp.SMTP('smtp.gmail.com')
 s.connect('smtp.gmail.com', 587)
