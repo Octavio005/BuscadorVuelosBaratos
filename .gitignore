@@ -3,6 +3,6 @@ __pycache__
 a.html
 Vuelos ordenados por fecha.xlsx
 Vuelos ordenados por precio.xlsx
-ciudades.txt
 Vuelos.json
 .env
+playwright-report

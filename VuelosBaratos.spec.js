@@ -2,22 +2,15 @@ import { test, expect } from '@playwright/test';
 let fs = require('fs');
 const { GoogleFlightsPage } = require('C:/Users/octi1/OneDrive/Escritorio/Codigo/Vuelos Baratos/GoogleFlightsPage');
 const { GraficoDePreciosPage } = require('C:/Users/octi1/OneDrive/Escritorio/Codigo/Vuelos Baratos/GraficoDePreciosPage');
-//const { Funciones } = require('C:/Users/octi1/OneDrive/Escritorio/Codigo/Vuelos Baratos/Funciones')
-
 
 test('Entrar al sitio y buscar vuelos baratos', async ({ page }) => {
 
     //Inicializacion de pagina
     const googleFlightsPage = new GoogleFlightsPage(page);
     const graficoDePreciosPage = new GraficoDePreciosPage(page);
-    //const funciones = new Funciones(page);
 
-    //let lista = funciones.getDatos('BUENOSAIRES', 'TOKIO')
     let origen = 'BUENOSAIRES';
     let destino = 'TOKIO';
-
-    //let origen = lista[0];
-    //let destino = lista[1];
 
     await page.goto(`https://www.google.com/travel/flights?q=Flights%20to%20${destino}%20from%20${origen}`);
     
