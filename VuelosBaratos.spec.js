@@ -1,26 +1,36 @@
 import { test, expect } from '@playwright/test';
-let fs = require('fs');
-const { GoogleFlightsPage } = require('C:/Users/octi1/OneDrive/Escritorio/Codigo/Vuelos Baratos/GoogleFlightsPage');
-const { GraficoDePreciosPage } = require('C:/Users/octi1/OneDrive/Escritorio/Codigo/Vuelos Baratos/GraficoDePreciosPage');
+import fs from 'fs';
+import GoogleFlightsPage from './GoogleFlightsPage.mjs';
+import GraficoDePreciosPage from './GraficoDePreciosPage.mjs';
+
 
 test('Entrar al sitio y buscar vuelos baratos', async ({ page }) => {
+
+    //Lectura del json que contiene los datos de las personas
+    let content = fs.readFileSync('personas.json', 'utf8');
+    const obj = JSON.parse(content);
 
     //Inicializacion de pagina
     const googleFlightsPage = new GoogleFlightsPage(page);
     const graficoDePreciosPage = new GraficoDePreciosPage(page);
 
-    let origen = 'BUENOSAIRES';
-    let destino = 'TOKIO';
+    //Formateo de strings
+    obj[0].origen = obj[0].origen.replace(/ /g,'').toUpperCase();
+    obj[0].destino = obj[0].destino.replace(/ /g,'').toUpperCase();
+    obj[0].dias = parseInt(obj[0].dias);
 
-    await page.goto(`https://www.google.com/travel/flights?q=Flights%20to%20${destino}%20from%20${origen}`);
+    
+    //Inicio de automatizacion
+    await page.goto(`https://www.google.com/travel/flights?q=Flights%20to%20${obj[0].destino}%20from%20${obj[0].origen}`);
     
     await expect(page).toHaveTitle(/Flights/);
     
     //Entra al sitio, busca el vuelo y entra al grafico de precios    
     await page.locator(googleFlightsPage.botonGraficoPrecios).nth(1).click();
 
-    //Elige la cantidad el periodo del vuelo ida y vuelta
-    for(let i = 0; i<11; i++) {
+    //Elige la cantidad de dias del viaje
+    //A obj[0].dias se le resta 4 porque el contador comienza en 4
+    for(let i = 0; i<obj[0].dias-4; i++) {
         await page.locator(graficoDePreciosPage.botonSumarDias).click();
     }
 
