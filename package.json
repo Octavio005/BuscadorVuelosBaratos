@@ -1,6 +1,7 @@
 {
   "name": "vuelos-baratos",
   "version": "1.0.0",
+  "type": "module",
   "description": "",
   "main": "VuelosBaratos.js",
   "scripts": {
@@ -11,5 +12,11 @@
   "license": "ISC",
   "devDependencies": {
     "@playwright/test": "^1.24.2"
+  },
+  "dependencies": {
+    "bootstrap": "^5.2.1",
+    "cross-fetch": "^3.1.5",
+    "fetch": "^1.1.0",
+    "node-fetch": "^3.2.10"
   }
 }
