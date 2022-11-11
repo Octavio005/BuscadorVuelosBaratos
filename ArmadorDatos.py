@@ -134,6 +134,9 @@ def obtener_lista_meses_mas_baratos():
         i.append(promedio)
     
     meses.sort(key=lambda meses: meses[1])
+
+    while len(meses) < 11:
+        meses.append(['', ''])
     
     return meses
 
